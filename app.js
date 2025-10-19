@@ -93,7 +93,7 @@ app.get("/", (req, res) => {
 });
 
 // 404 handler
-app.all("*", (req, res, next) => {
+app.all((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
 
@@ -108,3 +108,4 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
