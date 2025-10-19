@@ -1,22 +1,29 @@
+// Use global mapToken set in EJS
+if (!window.mapToken) {
+  console.error("MAP_TOKEN is not defined!");
+}
 
+const mapContainer = document.getElementById('map');
 
-// map.js — do NOT redeclare mapToken, it comes from EJS
+if (mapContainer) {
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: `https://api.maptiler.com/maps/streets/style.json?key=${window.mapToken}`,
+    center: [77.2090, 28.6139], // Delhi
+    zoom: 5
+  });
 
-// Make sure div with id="map" exists in the page
-const map = new maplibregl.Map({
-  container: 'map',
-  style: `https://api.maptiler.com/maps/streets/style.json?key=${mapToken}`,
-  center: [77.2090, 28.6139], // Delhi center
-  zoom: 5
-});
+  // Add navigation controls
+  map.addControl(new maplibregl.NavigationControl());
 
-// Optional: add navigation controls
-map.addControl(new maplibregl.NavigationControl());
+  // Handle missing icons gracefully
+  map.on('styleimagemissing', function(e) {
+    console.warn(`Missing map image: ${e.id}`);
+  });
+} else {
+  console.warn("No #map container found on this page.");
+}
 
-// Handle missing icons warning (optional)
-map.on('styleimagemissing', function(e) {
-  console.warn(`Missing image: ${e.id}`);
-});
 
 
     const el = document.createElement('div');
@@ -63,5 +70,6 @@ map.fitBounds([coordinates, coordinates], {
   padding: 100,
   maxZoom: 14,
 });
+
 
 
