@@ -59,6 +59,12 @@ store.on("error",()=>{
     console.log("ERROR in MONGO SESSION STORE",err);
 });
 
+app.use((req, res, next) => {
+  res.locals.MAP_TOKEN = process.env.MAP_TOKEN;
+  next();
+});
+
+
 const sessionOptions={
     store,
     secret:process.env.SECRET,
@@ -126,3 +132,4 @@ app.listen(port,()=>{
     console.log("server is listening to port 8080");
 
 });
+
