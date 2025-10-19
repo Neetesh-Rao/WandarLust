@@ -24,7 +24,10 @@ const listingRouter=require("./routes/listing.js");
 const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 
-
+app.use((req, res, next) => {
+  res.locals.MAP_TOKEN = process.env.MAP_TOKEN;
+  next();
+});
 const dbUrl=process.env.ATLASDB_URL;
 main()
 .then(()=>{
@@ -59,10 +62,7 @@ store.on("error",()=>{
     console.log("ERROR in MONGO SESSION STORE",err);
 });
 
-app.use((req, res, next) => {
-  res.locals.MAP_TOKEN = process.env.MAP_TOKEN;
-  next();
-});
+
 
 
 const sessionOptions={
@@ -132,4 +132,5 @@ app.listen(port,()=>{
     console.log("server is listening to port 8080");
 
 });
+
 
