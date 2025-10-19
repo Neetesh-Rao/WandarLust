@@ -1,15 +1,23 @@
 
 
-maptilersdk.config.apiKey = mapToken;
- 
+// map.js — do NOT redeclare mapToken, it comes from EJS
 
+// Make sure div with id="map" exists in the page
+const map = new maplibregl.Map({
+  container: 'map',
+  style: `https://api.maptiler.com/maps/streets/style.json?key=${mapToken}`,
+  center: [77.2090, 28.6139], // Delhi center
+  zoom: 5
+});
 
-       const map = new maptilersdk.Map({
-      container: 'map',
-      style: `https://api.maptiler.com/maps/streets/style.json?key=${mapToken}`,
-      center: [77.1025, 28.7041],
-      zoom: 9
-    });
+// Optional: add navigation controls
+map.addControl(new maplibregl.NavigationControl());
+
+// Handle missing icons warning (optional)
+map.on('styleimagemissing', function(e) {
+  console.warn(`Missing image: ${e.id}`);
+});
+
 
     const el = document.createElement('div');
 el.className = 'custom-marker';
@@ -55,4 +63,5 @@ map.fitBounds([coordinates, coordinates], {
   padding: 100,
   maxZoom: 14,
 });
+
 
