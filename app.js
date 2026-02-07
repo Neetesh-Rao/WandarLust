@@ -25,7 +25,7 @@ const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 
 
-const dbUrl="mongodb+srv://WandarLust:neetesh555@cluster0.4awvoqg.mongodb.net/?appName=Cluster0";
+const dbUrl="process.env.ATLAS_URL;
 main()
 .then(()=>{
     console.log("connect to DB");
